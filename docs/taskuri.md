@@ -1,0 +1,14 @@
+- [x] Creare repository
+- [ ] Scriere cerințe și specificații
+- [ ] Configurare proiect Spring Boot
+- [ ] Configurare PostgreSQL cu Docker
+- [ ] Creare tabele și relații
+- [ ] Implementare CRUD mașini
+- [ ] Implementare CRUD clienți
+- [ ] Implementare gestionare închirieri
+- [ ] Verificare disponibilitate și suprapuneri
+- [ ] Calculare cost închiriere
+- [ ] Validare formulare și afișare erori
+- [ ] Testare funcționalități
+- [ ] Configurare pornire completă cu Docker Compose
+- [ ] Documentare instalare și pregătire demonstrație

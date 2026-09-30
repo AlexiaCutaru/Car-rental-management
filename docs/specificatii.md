@@ -1,0 +1,7 @@
+- Java + Spring Boot pentru logica aplicației
+- Thymeleaf + Bootstrap pentru interfață
+- PostgreSQL pentru baza de date
+- Spring Data JPA pentru acces la date
+- Docker Compose pentru pornirea aplicației și a bazei de date
+- Tabele: cars, customers, rentals (plus alte câmpuri dacă va fi cazul)
+- Fiecare închiriere este asociată unei mașini și unui client
