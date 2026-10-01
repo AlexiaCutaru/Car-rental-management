@@ -1,0 +1,403 @@
+:root {
+    --background: #f5f7fb;
+    --surface: #ffffff;
+    --text: #192638;
+    --muted: #64748b;
+    --primary: #2563eb;
+    --border: #e5eaf2;
+    --sidebar: #142238;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: var(--background);
+    color: var(--text);
+    line-height: 1.5;
+}
+
+a {
+    color: var(--primary);
+}
+
+a:focus-visible {
+    outline: 3px solid #60a5fa;
+    outline-offset: 4px;
+}
+
+.layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Meniu lateral */
+.sidebar {
+    width: 240px;
+    flex-shrink: 0;
+    background: var(--sidebar);
+    color: white;
+    padding: 32px 22px;
+    display: flex;
+    flex-direction: column;
+}
+
+.brand {
+    color: white;
+    text-decoration: none;
+    font-size: 25px;
+    font-weight: 750;
+    letter-spacing: -1px;
+}
+
+.brand span {
+    color: #82b1ff;
+}
+
+.sidebar-label {
+    color: #a8b8d0;
+    font-size: 12px;
+    letter-spacing: 2px;
+    margin: 42px 12px 14px;
+}
+
+.navigation {
+    display: grid;
+    gap: 8px;
+}
+
+.nav-link {
+    display: block;
+    padding: 12px 16px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: #cbd5e1;
+    font-weight: 600;
+}
+
+.nav-link:hover {
+    background: #223651;
+    color: white;
+}
+
+.nav-link.active {
+    background: #2563eb;
+    color: white;
+}
+
+.sidebar-footer {
+    margin-top: auto;
+    padding-top: 40px;
+    font-size: 13px;
+    color: #a8b8d0;
+}
+
+/* Zona principală */
+.main {
+    flex: 1;
+    min-width: 0;
+    padding: 40px;
+}
+
+.content {
+    max-width: 1180px;
+    margin: 0 auto;
+}
+
+.topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 36px;
+    font-size: 14px;
+    color: var(--muted);
+}
+
+.tag {
+    padding: 7px 12px;
+    background: #e9effa;
+    color: #37527c;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+h1 {
+    margin: 0 0 10px;
+    font-size: clamp(28px, 4vw, 40px);
+    line-height: 1.2;
+    letter-spacing: -1px;
+}
+
+h2 {
+    margin: 0 0 10px;
+    font-size: 20px;
+}
+
+p {
+    margin: 0 0 16px;
+}
+
+.subtitle {
+    color: var(--muted);
+    max-width: 620px;
+}
+
+.hero {
+    padding: 38px;
+    border: 1px solid #dce6f7;
+    border-radius: 20px;
+    background: linear-gradient(120deg, #ffffff, #eaf1ff);
+    margin-bottom: 28px;
+}
+
+.eyebrow {
+    color: var(--primary);
+    font-size: 12px;
+    font-weight: 750;
+    letter-spacing: 1.5px;
+    margin-bottom: 16px;
+}
+
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 19px;
+    background: var(--primary);
+    border-radius: 10px;
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.button:hover {
+    background: #1d4ed8;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 26px;
+}
+
+.card p {
+    font-size: 14px;
+    color: var(--muted);
+}
+
+.card-mark {
+    display: inline-block;
+    padding: 7px 11px;
+    border-radius: 9px;
+    color: #2455a4;
+    background: #edf3ff;
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 22px;
+}
+
+.card-link {
+    font-weight: 650;
+    text-decoration: none;
+}
+
+.card-link:hover {
+    text-decoration: underline;
+}
+
+.coming-soon {
+    font-size: 13px;
+    color: var(--muted);
+}
+
+/* Lista de mașini */
+.page-heading {
+    margin-bottom: 28px;
+}
+
+.panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding: 22px 26px;
+    border-bottom: 1px solid var(--border);
+}
+
+.panel-header h2 {
+    margin: 0;
+    font-size: 17px;
+}
+
+.table-scroll {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+th {
+    background: #f8fafc;
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 650;
+    white-space: nowrap;
+}
+
+th, td {
+    padding: 17px 24px;
+    border-bottom: 1px solid var(--border);
+}
+
+td {
+    font-size: 14px;
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+tbody tr:hover {
+    background: #fafcff;
+}
+
+.vehicle-name {
+    font-weight: 650;
+}
+
+.plate {
+    font-family: Consolas, monospace;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.badge {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 650;
+    white-space: nowrap;
+}
+
+.badge-green {
+    background: #e7f5ed;
+    color: #226440;
+}
+
+.badge-orange {
+    background: #fff1df;
+    color: #925218;
+}
+
+.empty-state {
+    padding: 64px 24px;
+    text-align: center;
+}
+
+.empty-symbol {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 18px;
+    display: grid;
+    place-items: center;
+    border-radius: 18px;
+    background: #edf3ff;
+    color: var(--primary);
+    font-size: 28px;
+}
+
+.empty-state p {
+    color: var(--muted);
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+@media (max-width: 1000px) {
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+        width: 205px;
+    }
+
+    .main {
+        padding: 28px;
+    }
+}
+
+@media (max-width: 700px) {
+    .layout {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        padding: 20px;
+    }
+
+    .sidebar-label,
+    .sidebar-footer {
+        display: none;
+    }
+
+    .navigation {
+        grid-template-columns: 1fr 1fr;
+        margin-top: 18px;
+    }
+
+    .main {
+        padding: 24px 16px;
+    }
+
+    .hero {
+        padding: 26px;
+    }
+
+    .topbar {
+        margin-bottom: 24px;
+    }
+}
+
+.status-RESERVED {
+    background: #e8efff;
+    color: #2455a4;
+}
+
+.status-ACTIVE {
+    background: #e7f5ed;
+    color: #226440;
+}
+
+.status-COMPLETED {
+    background: #eef0f4;
+    color: #526074;
+}
+
+.status-CANCELLED {
+    background: #fdecec;
+    color: #a33232;
+}

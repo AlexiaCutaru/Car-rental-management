@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ro" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Închirieri | RentFlow</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="layout">
+    <aside class="sidebar">
+        <a class="brand" href="/">Rent<span>Flow</span></a>
+        <p class="sidebar-label">ADMINISTRARE</p>
+
+        <nav class="navigation" aria-label="Meniu principal">
+            <a class="nav-link" href="/">Acasă</a>
+            <a class="nav-link" href="/cars">Mașini</a>
+            <a class="nav-link" href="/customers">Clienți</a>
+            <a class="nav-link active" href="/rentals"
+               aria-current="page">Închirieri</a>
+        </nav>
+
+        <p class="sidebar-footer">
+            Mai multă ordine.<br>Mai puține griji.
+        </p>
+    </aside>
+
+    <main class="main">
+        <div class="content">
+            <header class="topbar">
+                <span>Administrare / Închirieri</span>
+                <span class="tag">RentFlow · Închirieri auto</span>
+            </header>
+
+            <div class="page-heading">
+                <p class="eyebrow">CĂLĂTORII ORGANIZATE</p>
+                <h1>Închirieri</h1>
+                <p class="subtitle">
+                    Urmărește mașina, clientul și perioada
+                    fiecărei închirieri.
+                </p>
+            </div>
+
+            <section class="panel" aria-label="Lista închirierilor">
+                <div class="panel-header">
+                    <h2>Toate închirierile</h2>
+                    <span class="tag"
+                          th:text="|Total: ${#lists.size(rentals)}|">
+                    </span>
+                </div>
+
+                <div class="empty-state"
+                     th:if="${#lists.isEmpty(rentals)}">
+                    <div class="empty-symbol" aria-hidden="true">↗</div>
+                    <h2>Pregătit pentru prima călătorie</h2>
+                    <p>
+                        Nu există încă închirieri înregistrate.
+                        Perioadele, clienții și costurile vor apărea aici.
+                    </p>
+                </div>
+
+                <div class="table-scroll"
+                     th:unless="${#lists.isEmpty(rentals)}">
+                    <table aria-label="Închirierile înregistrate">
+                        <thead>
+                        <tr>
+                            <th scope="col">Mașină</th>
+                            <th scope="col">Client</th>
+                            <th scope="col">Perioadă</th>
+                            <th scope="col">Total</th>
+                            <th scope="col">Stare</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="rental : ${rentals}">
+                            <td>
+                                <div class="vehicle-name"
+                                     th:text="|${rental.car.brand} ${rental.car.model}|">
+                                </div>
+                                <span class="plate"
+                                      th:text="${rental.car.licensePlate}">
+                                </span>
+                            </td>
+                            <td th:text="${rental.customer.name}"></td>
+                            <td>
+                                <span th:text="${#temporals.format(
+                                    rental.startDate, 'dd.MM.yyyy')}"></span>
+                                →
+                                <span th:text="${#temporals.format(
+                                    rental.endDate, 'dd.MM.yyyy')}"></span>
+                            </td>
+                            <td th:text="|${rental.totalPrice} RON|"></td>
+                            <td>
+                                <span class="badge"
+                                      th:classappend="|status-${rental.status.name()}|"
+                                      th:text="${rental.status.label}">
+                                </span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </main>
+</div>
+</body>
+</html>
