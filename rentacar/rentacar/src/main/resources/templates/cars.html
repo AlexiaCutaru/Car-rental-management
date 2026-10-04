@@ -14,12 +14,15 @@
         <p class="sidebar-label">ADMINISTRARE</p>
 
         <nav class="navigation" aria-label="Meniu principal">
-            <a class="nav-link" href="/">Acasă</a>
-            <a class="nav-link active" href="/cars" aria-current="page">
-            <a class="nav-link" href="/customers">Clienți</a>
-            <a class="nav-link" href="/rentals">Închirieri</a>
-                Mașini
-            </a>
+        <a class="nav-link" href="/">Acasă</a>
+
+        <a class="nav-link active" href="/cars" aria-current="page">
+            Mașini
+        </a>
+
+        <a class="nav-link" href="/customers">Clienți</a>
+
+        <a class="nav-link" href="/rentals">Închirieri</a>
         </nav>
 
         <p class="sidebar-footer">
@@ -42,6 +45,22 @@
                     Modelele, tarifele și starea tehnică,
                     într-o singură privire.
                 </p>
+            </div>
+
+            <div class="alert alert-success"
+                role="status"
+                th:if="${success}"
+                th:text="${success}">
+            </div>
+
+            <div class="alert alert-error"
+                role="alert"
+                th:if="${error}"
+                th:text="${error}">
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <a class="button" href="/cars/new">+ Adaugă mașină</a>
             </div>
 
             <section class="panel" aria-label="Lista mașinilor">
@@ -73,6 +92,7 @@
                             <th scope="col">An</th>
                             <th scope="col">Tarif/zi</th>
                             <th scope="col">Stare tehnică</th>
+                            <th scope="col">Acțiuni</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -93,6 +113,24 @@
                                           ? 'În service' : 'Operațională'}">
                                 </span>
                             </td>
+                            <td>
+                            <div class="row-actions">
+                                <a class="action-edit"
+                                th:href="@{/cars/{id}/edit(id=${car.id})}">
+                                    Editează
+                                </a>
+
+                                <form th:action="@{/cars/{id}/delete(id=${car.id})}"
+                                    method="post"
+                                    onsubmit="return confirm(
+                                        'Sigur vrei să ștergi această mașină?'
+                                    );">
+                                    <button class="action-delete" type="submit">
+                                        Șterge
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
                         </tr>
                         </tbody>
                     </table>

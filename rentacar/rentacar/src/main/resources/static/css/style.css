@@ -401,3 +401,153 @@ tbody tr:hover {
     background: #fdecec;
     color: #a33232;
 }
+
+.form-panel {
+    max-width: 850px;
+    padding: 30px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-field label {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.form-field input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    font: inherit;
+    color: var(--text);
+    background: white;
+}
+
+.form-field input:focus {
+    outline: 3px solid #dbeafe;
+    border-color: var(--primary);
+}
+
+.checkbox-field {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 28px;
+}
+
+.checkbox-field input {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--primary);
+}
+
+.form-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 30px;
+}
+
+button.button {
+    font: inherit;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+}
+
+.button-secondary {
+    background: #edf1f7;
+    color: var(--text);
+}
+
+.button-secondary:hover {
+    background: #dfe7f2;
+}
+
+.alert {
+    padding: 16px 20px;
+    border-radius: 12px;
+    margin-bottom: 24px;
+}
+
+.alert p {
+    margin: 0;
+}
+
+.alert-error {
+    background: #fff0f0;
+    color: #9f2424;
+}
+
+.alert-success {
+    background: #e7f5ed;
+    color: #226440;
+}
+
+@media (max-width: 700px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-panel {
+        padding: 22px;
+    }
+}
+
+.row-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    white-space: nowrap;
+}
+
+.row-actions form {
+    margin: 0;
+}
+
+.action-edit,
+.action-delete {
+    display: inline-block;
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: none;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.action-edit {
+    background: #eaf1ff;
+    color: #2455a4;
+}
+
+.action-edit:hover {
+    background: #dce8ff;
+}
+
+.action-delete {
+    background: #fff0f0;
+    color: #a33232;
+}
+
+.action-delete:hover {
+    background: #fbdcdc;
+}
+
+button:focus-visible {
+    outline: 3px solid #60a5fa;
+    outline-offset: 3px;
+}
