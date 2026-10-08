@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ro" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Clienți | RentFlow</title><link rel="stylesheet" href="/css/style.css"><script src="/js/premium.js" defer></script></head>
+<body><header th:replace="~{fragments/premium :: navigation('customers')}"></header>
+<main class="app-main"><div class="app-container">
+    <div class="page-title"><div><p class="eyebrow">RENTFLOW / CLIENȚI</p><h1>Oamenii din spatele drumurilor.</h1><p class="subtitle">Date de contact organizate. Relații mai ușor de gestionat.</p></div><a class="button" href="/customers/new">Adaugă un client <span aria-hidden="true">+</span></a></div>
+    <div th:replace="~{fragments/premium :: messages}"></div>
+    <section data-filter-root aria-label="Lista clienților">
+        <div class="toolbar"><label class="search-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="m15 15 6 6"/></svg><input data-search type="search" aria-label="Caută clientul" placeholder="Caută nume, email sau telefon…"></label><span class="tag" th:text="|${#lists.size(customers)} clienți înregistrați|"></span></div>
+        <div class="empty-state" th:if="${#lists.isEmpty(customers)}"><h2>Primul client, primul drum.</h2><p>Adaugă un client pentru a putea crea prima închiriere.</p><a class="button" href="/customers/new">Adaugă un client</a></div>
+        <div class="panel" th:unless="${#lists.isEmpty(customers)}"><div class="panel-header"><h2>Agenda de clienți</h2><span class="result-caption">Afișați: <span data-result-count aria-live="polite"></span></span></div><div class="table-scroll"><table aria-label="Clienți"><thead><tr><th scope="col">Client</th><th scope="col">Email</th><th scope="col">Telefon</th><th scope="col">Acțiuni</th></tr></thead><tbody>
+            <tr th:each="customer : ${customers}" data-item th:attr="data-search-text=|${customer.name} ${customer.email} ${customer.phone}|"><td><div class="client-name-cell"><span class="client-avatar" aria-hidden="true" th:text="${#strings.substring(customer.name, 0, 1)}"></span><span class="vehicle-name" th:text="${customer.name}"></span></div></td><td th:text="${customer.email}"></td><td th:text="${customer.phone}"></td><td><div class="row-actions"><a class="action-edit" th:href="@{/customers/{id}/edit(id=${customer.id})}">Editează</a><form th:action="@{/customers/{id}/delete(id=${customer.id})}" method="post" onsubmit="return confirm('Sigur vrei să ștergi acest client?');"><button class="action-delete" type="submit">Șterge</button></form></div></td></tr>
+        </tbody></table></div></div>
+        <div class="empty-state" data-no-results hidden><h2>Niciun client găsit.</h2><p>Încearcă un alt nume, email sau număr de telefon.</p></div>
+    </section>
+    <footer class="app-footer"><strong>RentFlow — fiecare drum, organizat.</strong><span>Clienții cu închirieri rămân în istoric</span></footer>
+</div></main></body></html>

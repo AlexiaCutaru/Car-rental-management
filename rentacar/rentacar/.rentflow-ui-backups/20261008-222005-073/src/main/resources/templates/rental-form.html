@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ro" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Închiriere nouă | RentFlow</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="layout">
+    <aside class="sidebar">
+        <a class="brand" href="/">Rent<span>Flow</span></a>
+        <p class="sidebar-label">ADMINISTRARE</p>
+
+        <nav class="navigation" aria-label="Meniu principal">
+            <a class="nav-link" href="/">Acasă</a>
+            <a class="nav-link" href="/cars">Mașini</a>
+            <a class="nav-link" href="/customers">Clienți</a>
+            <a class="nav-link active" href="/rentals">Închirieri</a>
+        </nav>
+
+        <p class="sidebar-footer">
+            Mai multă ordine.<br>Mai puține griji.
+        </p>
+    </aside>
+
+    <main class="main">
+        <div class="content">
+            <header class="topbar">
+                <a href="/rentals">← Înapoi la închirieri</a>
+                <span class="tag">RentFlow · Închirieri auto</span>
+            </header>
+
+            <div class="page-heading">
+                <p class="eyebrow">O NOUĂ CĂLĂTORIE</p>
+                <h1>Închiriere nouă</h1>
+                <p class="subtitle">
+                    Alege clientul, mașina și perioada.
+                    Costul se calculează automat la salvare.
+                </p>
+            </div>
+
+            <form class="panel form-panel"
+                  th:action="@{/rentals}"
+                  th:object="${rentalForm}"
+                  method="post">
+
+                <div class="alert alert-error"
+                     role="alert"
+                     th:if="${#fields.hasAnyErrors()}">
+                    <ul>
+                        <li th:each="error : ${#fields.allErrors()}"
+                            th:text="${error}"></li>
+                    </ul>
+                </div>
+
+                <div class="alert"
+                     th:if="${#lists.isEmpty(cars)}">
+                    Nu există mașini operaționale.
+                    <a href="/cars/new">Adaugă o mașină</a>
+                    sau actualizează starea unei mașini existente.
+                </div>
+
+                <div class="alert"
+                     th:if="${#lists.isEmpty(customers)}">
+                    Nu există clienți.
+                    <a href="/customers/new">Adaugă un client</a>
+                    înainte de închiriere.
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-field">
+                        <label for="customerId">Client</label>
+                        <select id="customerId"
+                                th:field="*{customerId}" required>
+                            <option value="">Selectează clientul</option>
+                            <option th:each="customer : ${customers}"
+                                    th:value="${customer.id}"
+                                    th:text="|${customer.name} — ${customer.email}|">
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="form-field">
+                        <label for="carId">Mașină</label>
+                        <select id="carId" th:field="*{carId}" required>
+                            <option value="">Selectează mașina</option>
+                            <option th:each="car : ${cars}"
+                                    th:value="${car.id}"
+                                    th:text="|${car.brand} ${car.model} · ${car.licensePlate} · ${car.pricePerDay} RON/zi|">
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="form-field">
+                        <label for="startDate">Data preluării</label>
+                        <input id="startDate" type="date"
+                               th:field="*{startDate}" required>
+                    </div>
+
+                    <div class="form-field">
+                        <label for="endDate">Data returnării</label>
+                        <input id="endDate" type="date"
+                               th:field="*{endDate}" required>
+                    </div>
+                </div>
+
+                <p class="subtitle" style="margin-top: 24px;">
+                    Data returnării nu se taxează.
+                    Disponibilitatea mașinii se verifică la salvare.
+                </p>
+
+                <div class="form-actions">
+                    <button class="button" type="submit"
+                            th:disabled="${#lists.isEmpty(cars)
+                                or #lists.isEmpty(customers)}">
+                        Creează închirierea
+                    </button>
+
+                    <a class="button button-secondary" href="/rentals">
+                        Anulează
+                    </a>
+                </div>
+            </form>
+        </div>
+    </main>
+</div>
+</body>
+</html>

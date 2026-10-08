@@ -1,229 +1,37 @@
 <!DOCTYPE html>
 <html lang="ro" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Închirieri | RentFlow</title>
-    <link rel="stylesheet" href="/css/style.css">
-</head>
-<body>
-<div class="layout">
-    <aside class="sidebar">
-        <a class="brand" href="/">Rent<span>Flow</span></a>
-        <p class="sidebar-label">ADMINISTRARE</p>
-
-        <nav class="navigation" aria-label="Meniu principal">
-            <a class="nav-link" href="/">Acasă</a>
-            <a class="nav-link" href="/cars">Mașini</a>
-            <a class="nav-link" href="/customers">Clienți</a>
-            <a class="nav-link active"
-               href="/rentals"
-               aria-current="page">
-                Închirieri
-            </a>
-        </nav>
-
-        <p class="sidebar-footer">
-            Mai multă ordine.<br>
-            Mai puține griji.
-        </p>
-    </aside>
-
-    <main class="main">
-        <div class="content">
-            <header class="topbar">
-                <span>Administrare / Închirieri</span>
-                <span class="tag">RentFlow · Închirieri auto</span>
-            </header>
-
-            <div class="page-heading">
-                <p class="eyebrow">CĂLĂTORII ORGANIZATE</p>
-                <h1>Închirieri</h1>
-                <p class="subtitle">
-                    Urmărește rezervările, preluările și returnările
-                    mașinilor din flotă.
-                </p>
-            </div>
-
-            <section class="stats-grid" aria-label="Situația închirierilor">
-                <article class="stat-card stat-purple">
-                    <p>Rezervate</p>
-                    <strong th:text="${#lists.size(
-                        rentals.?[status.name() == 'RESERVED']
-                    )}">0</strong>
-                    <small>În așteptarea preluării</small>
-                </article>
-
-                <article class="stat-card stat-green">
-                    <p>În desfășurare</p>
-                    <strong th:text="${#lists.size(
-                        rentals.?[status.name() == 'ACTIVE']
-                    )}">0</strong>
-                    <small>Mașini preluate de clienți</small>
-                </article>
-
-                <article class="stat-card stat-blue">
-                    <p>Finalizate</p>
-                    <strong th:text="${#lists.size(
-                        rentals.?[status.name() == 'COMPLETED']
-                    )}">0</strong>
-                    <small>Închirieri încheiate</small>
-                </article>
-
-                <article class="stat-card stat-rose">
-                    <p>Anulate</p>
-                    <strong th:text="${#lists.size(
-                        rentals.?[status.name() == 'CANCELLED']
-                    )}">0</strong>
-                    <small>Rezervări retrase</small>
-                </article>
-            </section>
-
-            <div class="alert alert-success"
-                 role="status"
-                 th:if="${success}"
-                 th:text="${success}">
-            </div>
-
-            <div class="alert alert-error"
-                 role="alert"
-                 th:if="${error}"
-                 th:text="${error}">
-            </div>
-
-            <div style="margin-bottom: 20px;">
-                <a class="button" href="/rentals/new">
-                    + Închiriere nouă
-                </a>
-            </div>
-
-            <section class="panel" aria-label="Lista închirierilor">
-                <div class="panel-header">
-                    <h2>Toate închirierile</h2>
-                    <span class="tag"
-                          th:text="|Total: ${#lists.size(rentals)}|">
-                    </span>
-                </div>
-
-                <div class="empty-state"
-                     th:if="${#lists.isEmpty(rentals)}">
-                    <div class="empty-symbol" aria-hidden="true">↗</div>
-                    <h2>Pregătit pentru prima călătorie</h2>
-                    <p>
-                        Creează prima închiriere pentru a vedea
-                        aici clientul, perioada și costul.
-                    </p>
-                </div>
-
-                <div class="table-scroll"
-                     th:unless="${#lists.isEmpty(rentals)}">
-                    <table aria-label="Închirierile înregistrate">
-                        <thead>
-                        <tr>
-                            <th scope="col">Mașină</th>
-                            <th scope="col">Client</th>
-                            <th scope="col">Perioadă</th>
-                            <th scope="col">Cost convenit</th>
-                            <th scope="col">Stare</th>
-                            <th scope="col">Acțiuni</th>
-                        </tr>
-                        </thead>
-
-                        <tbody>
-                        <tr th:each="rental : ${rentals}">
-                            <td>
-                                <div class="vehicle-name"
-                                     th:text="|${rental.car.brand} ${rental.car.model}|">
-                                </div>
-                                <span class="plate"
-                                      th:text="${rental.car.licensePlate}">
-                                </span>
-                            </td>
-
-                            <td th:text="${rental.customer.name}"></td>
-
-                            <td>
-                                <span th:text="${#temporals.format(
-                                    rental.startDate, 'dd.MM.yyyy')}">
-                                </span>
-                                →
-                                <span th:text="${#temporals.format(
-                                    rental.endDate, 'dd.MM.yyyy')}">
-                                </span>
-                            </td>
-
-                            <td th:text="|${rental.totalPrice} RON|"></td>
-
-                            <td>
-                                <span class="badge"
-                                      th:classappend="|status-${rental.status.name()}|"
-                                      th:text="${rental.status.label}">
-                                </span>
-                            </td>
-
-                            <td>
-                                <div class="row-actions">
-                                    <form
-                                        th:if="${rental.status.name() == 'RESERVED'}"
-                                        th:action="@{/rentals/{id}/status(id=${rental.id})}"
-                                        method="post">
-
-                                        <input type="hidden"
-                                               name="action"
-                                               value="start">
-
-                                        <button class="action-edit"
-                                                type="submit">
-                                            Preluare
-                                        </button>
-                                    </form>
-
-                                    <form
-                                        th:if="${rental.status.name() == 'RESERVED'}"
-                                        th:action="@{/rentals/{id}/status(id=${rental.id})}"
-                                        method="post"
-                                        onsubmit="return confirm('Sigur vrei să anulezi această închiriere?');">
-
-                                        <input type="hidden"
-                                               name="action"
-                                               value="cancel">
-
-                                        <button class="action-delete"
-                                                type="submit">
-                                            Anulează
-                                        </button>
-                                    </form>
-
-                                    <form
-                                        th:if="${rental.status.name() == 'ACTIVE'}"
-                                        th:action="@{/rentals/{id}/status(id=${rental.id})}"
-                                        method="post"
-                                        onsubmit="return confirm('Confirmi returnarea mașinii și finalizarea închirierii?');">
-
-                                        <input type="hidden"
-                                               name="action"
-                                               value="complete">
-
-                                        <button class="action-edit"
-                                                type="submit">
-                                            Finalizează
-                                        </button>
-                                    </form>
-
-                                    <span class="coming-soon"
-                                          th:if="${rental.status.name() == 'COMPLETED'
-                                              or rental.status.name() == 'CANCELLED'}">
-                                        Închisă
-                                    </span>
-                                </div>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </section>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Închirieri | RentFlow</title><link rel="stylesheet" href="/css/premium-final.css?v=20261008-final"><script src="/js/premium.js?v=20261008-final" defer></script></head>
+<body><header th:replace="~{fragments/premium :: navigation('rentals')}"></header>
+<main class="app-main"><div class="app-container">
+    <div class="page-title"><div><p class="eyebrow">RENTFLOW / ÎNCHIRIERI</p><h1>Fiecare călătorie, sub control.</h1><p class="subtitle">De la rezervare până la returnare. Vezi rapid ce urmează.</p></div><a class="button" href="/rentals/new">Închiriere nouă <span aria-hidden="true">↗</span></a></div>
+    <div th:replace="~{fragments/premium :: messages}"></div>
+    <section class="stats-grid" aria-label="Situația închirierilor">
+        <article class="stat-card"><span class="stat-index" aria-hidden="true">01 /</span><p>Rezervate</p><strong th:text="${#lists.size(rentals.?[status.name() == 'RESERVED'])}">0</strong><small>În așteptarea preluării</small></article>
+        <article class="stat-card"><span class="stat-index" aria-hidden="true">02 /</span><p>În desfășurare</p><strong th:text="${#lists.size(rentals.?[status.name() == 'ACTIVE'])}">0</strong><small>Mașini preluate de clienți</small></article>
+        <article class="stat-card"><span class="stat-index" aria-hidden="true">03 /</span><p>Finalizate</p><strong th:text="${#lists.size(rentals.?[status.name() == 'COMPLETED'])}">0</strong><small>Închirieri încheiate</small></article>
+        <article class="stat-card"><span class="stat-index" aria-hidden="true">04 /</span><p>Anulate</p><strong th:text="${#lists.size(rentals.?[status.name() == 'CANCELLED'])}">0</strong><small>Păstrate în istoric</small></article>
+    </section>
+    <section data-filter-root aria-label="Închirierile înregistrate">
+        <div class="toolbar"><label class="search-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="m15 15 6 6"/></svg><input data-search type="search" aria-label="Caută închirierea" placeholder="Caută client, mașină sau număr…"></label>
+            <div class="filter-group" role="group" aria-label="Filtru stare închiriere"><button class="filter-chip is-active" data-filter="all" aria-pressed="true" type="button">Toate</button><button class="filter-chip" data-filter="RESERVED" aria-pressed="false" type="button">Rezervate</button><button class="filter-chip" data-filter="ACTIVE" aria-pressed="false" type="button">Active</button><button class="filter-chip" data-filter="COMPLETED" aria-pressed="false" type="button">Finalizate</button><button class="filter-chip" data-filter="CANCELLED" aria-pressed="false" type="button">Anulate</button></div>
         </div>
-    </main>
-</div>
-</body>
-</html>
+        <p class="result-caption">Închirieri afișate: <span data-result-count aria-live="polite"></span></p>
+        <div class="empty-state" th:if="${#lists.isEmpty(rentals)}"><h2>Pregătit pentru prima călătorie.</h2><p>Alege mașina, clientul și perioada. Noi calculăm costul.</p><a class="button" href="/rentals/new">Creează o închiriere</a></div>
+        <div class="rental-grid">
+            <article class="rental-card" th:each="rental : ${rentals}" data-item th:attr="data-state=${rental.status.name()},data-search-text=|${rental.customer.name} ${rental.car.brand} ${rental.car.model} ${rental.car.licensePlate} ${rental.id}|">
+                <div class="rental-top"><span class="rental-number" th:text="|RENT / ${rental.id}|"></span><span class="badge" th:classappend="|status-${rental.status.name()}|" th:text="${rental.status.label}"></span></div>
+                <h3 th:text="|${rental.car.brand} ${rental.car.model}|"></h3><span class="plate" th:text="${rental.car.licensePlate}"></span><p class="rental-client">Client: <strong th:text="${rental.customer.name}"></strong></p>
+                <div class="rental-period"><div><small>Preluare</small><time th:datetime="${rental.startDate}" th:text="${#temporals.format(rental.startDate, 'dd.MM.yyyy')}"></time></div><span aria-hidden="true">→</span><div><small>Returnare</small><time th:datetime="${rental.endDate}" th:text="${#temporals.format(rental.endDate, 'dd.MM.yyyy')}"></time></div></div>
+                <div class="rental-bottom"><span class="coming-soon">Cost convenit</span><div class="rental-price"><span th:text="${rental.totalPrice}"></span> <small>RON</small></div></div>
+                <div class="row-actions">
+                    <form th:if="${rental.status.name() == 'RESERVED'}" th:action="@{/rentals/{id}/status(id=${rental.id})}" method="post"><input type="hidden" name="action" value="start"><button class="action-edit" type="submit">Preluare ↗</button></form>
+                    <form th:if="${rental.status.name() == 'RESERVED'}" th:action="@{/rentals/{id}/status(id=${rental.id})}" method="post" onsubmit="return confirm('Sigur vrei să anulezi această închiriere?');"><input type="hidden" name="action" value="cancel"><button class="action-delete" type="submit">Anulează</button></form>
+                    <form th:if="${rental.status.name() == 'ACTIVE'}" th:action="@{/rentals/{id}/status(id=${rental.id})}" method="post" onsubmit="return confirm('Confirmi returnarea mașinii și finalizarea închirierii?');"><input type="hidden" name="action" value="complete"><button class="action-edit" type="submit">Finalizează ↗</button></form>
+                    <span class="coming-soon" th:if="${rental.status.name() == 'COMPLETED' or rental.status.name() == 'CANCELLED'}">Închisă · păstrată în istoric</span>
+                </div>
+            </article>
+        </div>
+        <div class="empty-state" data-no-results hidden><h2>Nicio închiriere găsită.</h2><p>Schimbă filtrul sau textul căutării.</p></div>
+    </section>
+    <footer class="app-footer"><strong>RentFlow — fiecare drum, organizat.</strong><span>Data returnării nu se taxează</span></footer>
+</div></main></body></html>

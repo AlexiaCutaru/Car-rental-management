@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ro" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${carId != null
+    ? 'Editează mașina | RentFlow'
+    : 'Adaugă mașină | RentFlow'}">
+    Mașină | RentFlow
+    </title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="layout">
+    <aside class="sidebar">
+        <a class="brand" href="/">Rent<span>Flow</span></a>
+        <p class="sidebar-label">ADMINISTRARE</p>
+
+        <nav class="navigation" aria-label="Meniu principal">
+            <a class="nav-link" href="/">Acasă</a>
+            <a class="nav-link active" href="/cars">Mașini</a>
+            <a class="nav-link" href="/customers">Clienți</a>
+            <a class="nav-link" href="/rentals">Închirieri</a>
+        </nav>
+
+        <p class="sidebar-footer">
+            Mai multă ordine.<br>Mai puține griji.
+        </p>
+    </aside>
+
+    <main class="main">
+        <div class="content">
+            <header class="topbar">
+                <a href="/cars">← Înapoi la mașini</a>
+                <span class="tag">RentFlow · Închirieri auto</span>
+            </header>
+
+            <div class="page-heading">
+                <p class="eyebrow">ADMINISTRARE FLOTĂ</p>
+                <h1 th:text="${carId != null
+                    ? 'Editează mașina'
+                    : 'Adaugă o mașină'}">
+                </h1>
+                <h1>Adaugă o mașină</h1>
+                <p class="subtitle">
+                    Completează datele mașinii și tariful zilnic în RON.
+                </p>
+            </div>
+
+            <form class="panel form-panel"
+                  th:action="${carId != null}
+                  ? @{/cars/{id}/edit(id=${carId})}
+                  : @{/cars}"
+                  th:object="${car}"
+                  method="post">
+
+                <div class="alert alert-error"
+                     role="alert"
+                     th:if="${#fields.hasAnyErrors()}">
+                    <p>Verifică datele introduse înainte de salvare.</p>
+                    <ul>
+                        <li th:each="error : ${#fields.allErrors()}"
+                            th:text="${error}"></li>
+                    </ul>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-field">
+                        <label for="brand">Marcă</label>
+                        <input id="brand" type="text"
+                               th:field="*{brand}"
+                               placeholder="Ex.: Dacia"
+                               maxlength="100" required>
+                    </div>
+
+                    <div class="form-field">
+                        <label for="model">Model</label>
+                        <input id="model" type="text"
+                               th:field="*{model}"
+                               placeholder="Ex.: Duster"
+                               maxlength="100" required>
+                    </div>
+
+                    <div class="form-field">
+                        <label for="licensePlate">Număr de înmatriculare</label>
+                        <input id="licensePlate" type="text"
+                               th:field="*{licensePlate}"
+                               placeholder="Ex.: B123ABC"
+                               maxlength="20" required>
+                    </div>
+
+                    <div class="form-field">
+                        <label for="manufactureYear">An fabricație</label>
+                        <input id="manufactureYear" type="number"
+                               th:field="*{manufactureYear}"
+                               placeholder="Ex.: 2022"
+                               min="1900" step="1" required>
+                    </div>
+
+                    <div class="form-field">
+                        <label for="pricePerDay">Tarif zilnic (RON)</label>
+                        <input id="pricePerDay" type="number"
+                               th:field="*{pricePerDay}"
+                               placeholder="Ex.: 180"
+                               min="0.01" max="99999999.99"
+                               step="0.01" required>
+                    </div>
+                </div>
+
+                <label class="checkbox-field" for="inService">
+                    <input id="inService" type="checkbox"
+                           th:field="*{inService}">
+                    Mașina este momentan în service
+                </label>
+
+                <div class="form-actions">
+                    <button class="button" type="submit">
+                        Salvează mașina
+                    </button>
+                    <a class="button button-secondary" href="/cars">
+                        Anulează
+                    </a>
+                </div>
+            </form>
+        </div>
+    </main>
+</div>
+</body>
+</html>

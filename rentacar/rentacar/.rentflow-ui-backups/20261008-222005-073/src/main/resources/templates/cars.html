@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ro" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Flota | RentFlow</title><link rel="stylesheet" href="/css/style.css"><script src="/js/premium.js" defer></script></head>
+<body><header th:replace="~{fragments/premium :: navigation('cars')}"></header>
+<main class="app-main"><div class="app-container">
+    <div class="page-title"><div><p class="eyebrow">RENTFLOW / FLOTA TA</p><h1>Pregătite pentru drum.</h1><p class="subtitle">Modelele, tarifele și starea tehnică, la îndemână.</p></div><a class="button" href="/cars/new">Adaugă o mașină <span aria-hidden="true">+</span></a></div>
+    <div th:replace="~{fragments/premium :: messages}"></div>
+    <section data-filter-root aria-label="Mașinile din flotă">
+        <div class="toolbar">
+            <label class="search-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="m15 15 6 6"/></svg><input data-search type="search" aria-label="Caută mașina" placeholder="Caută marcă, model sau număr…"></label>
+            <div class="filter-group" role="group" aria-label="Filtru stare tehnică"><button class="filter-chip is-active" data-filter="all" aria-pressed="true" type="button">Toate</button><button class="filter-chip" data-filter="operational" aria-pressed="false" type="button">Operaționale</button><button class="filter-chip" data-filter="service" aria-pressed="false" type="button">În service</button></div>
+        </div>
+        <p class="result-caption">Mașini afișate: <span data-result-count aria-live="polite" th:text="${#lists.size(cars)}"></span> · Starea tehnică nu reprezintă disponibilitatea pentru o perioadă.</p>
+        <div class="empty-state" th:if="${#lists.isEmpty(cars)}"><div class="empty-symbol" aria-hidden="true">↗</div><h2>Flota ta începe aici.</h2><p>Adaugă prima mașină și stabilește tariful zilnic.</p><a class="button" href="/cars/new">Adaugă o mașină</a></div>
+        <div class="fleet-grid">
+            <article class="vehicle-card" th:each="car : ${cars}" data-item th:attr="data-state=${car.inService ? 'service' : 'operational'},data-search-text=|${car.brand} ${car.model} ${car.licensePlate}|">
+                <div class="vehicle-art"><img src="/images/fleet-hero.svg" alt="" loading="lazy" width="880" height="520"><span class="badge" th:classappend="${car.inService ? 'badge-orange' : 'badge-green'}" th:text="${car.inService ? 'În service' : 'Operațională'}"></span><span class="art-caption">Ilustrație auto</span></div>
+                <div class="vehicle-info"><h2 th:text="|${car.brand} ${car.model}|"></h2><span class="plate" th:text="${car.licensePlate}"></span>
+                    <div class="vehicle-meta"><div><small>An fabricație</small><div th:text="${car.manufactureYear}"></div></div><div class="vehicle-price"><span th:text="${car.pricePerDay}"></span> <small>RON / zi</small></div></div>
+                    <div class="row-actions"><a class="action-edit" th:href="@{/cars/{id}/edit(id=${car.id})}">Editează</a><form th:action="@{/cars/{id}/delete(id=${car.id})}" method="post" onsubmit="return confirm('Sigur vrei să ștergi această mașină?');"><button class="action-delete" type="submit">Șterge</button></form></div>
+                </div>
+            </article>
+        </div>
+        <div class="empty-state" data-no-results hidden><h2>Nicio mașină găsită.</h2><p>Încearcă alt text sau schimbă filtrul de stare tehnică.</p></div>
+    </section>
+    <footer class="app-footer"><strong>RentFlow — fiecare drum, organizat.</strong><span>Flota ta, într-o singură privire</span></footer>
+</div></main></body></html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ro" xmlns:th="http://www.thymeleaf.org">
+<body>
+<header class="site-header" th:fragment="navigation(page)">
+    <a class="wordmark" href="/" aria-label="RentFlow — Acasă">
+        <span class="logo-mark" aria-hidden="true">R</span>Rent<span>Flow</span><small>FLEET MANAGEMENT</small>
+    </a>
+    <nav class="primary-nav" aria-label="Meniu principal">
+        <a href="/" th:classappend="${page == 'home' ? 'selected' : ''}"
+           th:attr="aria-current=${page == 'home' ? 'page' : null}">Overview</a>
+        <a href="/cars" th:classappend="${page == 'cars' ? 'selected' : ''}"
+           th:attr="aria-current=${page == 'cars' ? 'page' : null}">Mașini</a>
+        <a href="/customers" th:classappend="${page == 'customers' ? 'selected' : ''}"
+           th:attr="aria-current=${page == 'customers' ? 'page' : null}">Clienți</a>
+        <a href="/rentals" th:classappend="${page == 'rentals' ? 'selected' : ''}"
+           th:attr="aria-current=${page == 'rentals' ? 'page' : null}">Închirieri</a>
+    </nav>
+    <a class="button button-dark header-action" href="/rentals/new">Închiriere nouă <span aria-hidden="true">↗</span></a>
+</header>
+<div th:fragment="messages">
+    <div class="alert alert-success" role="status" th:if="${success}" th:text="${success}"></div>
+    <div class="alert alert-error" role="alert" th:if="${error}" th:text="${error}"></div>
+</div>
+</body>
+</html>

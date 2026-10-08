@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ro" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Overview | RentFlow</title><link rel="stylesheet" href="/css/style.css"></head>
+<body>
+<header th:replace="~{fragments/premium :: navigation('home')}"></header>
+<main class="app-main"><div class="app-container">
+    <div class="page-title"><div><p class="eyebrow">RENTFLOW / OVERVIEW</p><p class="subtitle">O zi bine organizată începe aici.</p></div><span class="date-label" th:text="${todayLabel}"></span></div>
+    <section class="hero-premium">
+        <div class="hero-copy"><p class="eyebrow">FLOTA TA. ÎN MIȘCARE.</p><h1>Mai puține griji.<br><em>Mai mult drum.</em></h1><p>Mașini, clienți și închirieri. Tot ce ai nevoie pentru a ține lucrurile în mișcare, într-un singur loc.</p><div class="hero-actions"><a class="button" href="/rentals/new">Creează o închiriere <span aria-hidden="true">↗</span></a><a class="button button-outline" href="/cars">Explorează flota</a></div></div>
+        <div class="hero-art"><img src="/images/fleet-hero.svg" alt="" width="880" height="520"><span class="art-caption">RENTFLOW / DRIVE FORWARD</span></div>
+    </section>
+    <section class="stats-grid" aria-label="Situația actuală">
+        <article class="stat-card"><span class="stat-index" aria-hidden="true">01 /</span><p>Mașini în flotă</p><strong th:text="${carCount}">0</strong><small>Toate mașinile înregistrate</small></article>
+        <article class="stat-card"><span class="stat-index" aria-hidden="true">02 /</span><p>În desfășurare</p><strong th:text="${activeCount}">0</strong><small>Închirieri cu mașina preluată</small></article>
+        <article class="stat-card"><span class="stat-index" aria-hidden="true">03 /</span><p>Rezervări</p><strong th:text="${reservedCount}">0</strong><small>În așteptarea preluării</small></article>
+        <article class="stat-card"><span class="stat-index" aria-hidden="true">04 /</span><p>Clienți</p><strong th:text="${customerCount}">0</strong><small>Clienți înregistrați</small></article>
+    </section>
+    <div class="dashboard-grid">
+        <section class="panel"><div class="panel-header"><h2>Agenda zilei</h2><span class="tag">Astăzi</span></div><div class="panel-content">
+            <h3 class="schedule-heading">Preluări programate astăzi</h3><p class="empty-inline" th:if="${#lists.isEmpty(pickups)}">Nicio preluare programată pentru astăzi.</p>
+            <div class="schedule-row" th:each="r : ${pickups}"><span class="schedule-dot" aria-hidden="true"></span><div><p th:text="|${r.car.brand} ${r.car.model}|"></p><small th:text="${r.customer.name}"></small></div><a class="text-link" href="/rentals">Deschide ↗</a></div>
+            <h3 class="schedule-heading">Returnări astăzi sau întârziate</h3><p class="empty-inline" th:if="${#lists.isEmpty(returns)}">Nicio returnare de urmărit astăzi.</p>
+            <div class="schedule-row" th:each="r : ${returns}"><span class="schedule-dot green" aria-hidden="true"></span><div><p th:text="|${r.car.brand} ${r.car.model}|"></p><small th:text="|${r.customer.name} · ${#temporals.format(r.endDate, 'dd.MM.yyyy')}|"></small></div><a class="text-link" href="/rentals">Deschide ↗</a></div>
+        </div></section>
+        <section class="panel"><div class="panel-header"><h2>Ultimele închirieri create</h2><a class="text-link" href="/rentals">Vezi toate ↗</a></div><div class="panel-content">
+            <p class="empty-inline" th:if="${#lists.isEmpty(recentRentals)}">Prima închiriere va apărea aici după salvare.</p>
+            <div class="recent-row" th:each="r : ${recentRentals}"><div><strong th:text="|${r.car.brand} ${r.car.model}|"></strong><small th:text="|${r.customer.name} · ${r.totalPrice} RON|"></small></div><span class="badge" th:classappend="|status-${r.status.name()}|" th:text="${r.status.label}"></span></div>
+        </div></section>
+    </div>
+    <footer class="app-footer"><strong>RentFlow — fiecare drum, organizat.</strong><span>Administrarea flotei și a închirierilor</span></footer>
+</div></main></body></html>
