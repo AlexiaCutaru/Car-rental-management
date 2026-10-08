@@ -40,6 +40,23 @@
                 </p>
             </div>
 
+
+            <div class="alert alert-success"
+                role="status"
+                th:if="${success}"
+                th:text="${success}">
+            </div>
+
+            <div class="alert alert-error"
+                role="alert"
+                th:if="${error}"
+                th:text="${error}">
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <a class="button" href="/customers/new">+ Adaugă client</a>
+            </div>
+
             <section class="panel" aria-label="Lista clienților">
                 <div class="panel-header">
                     <h2>Toți clienții</h2>
@@ -66,6 +83,7 @@
                             <th scope="col">Nume</th>
                             <th scope="col">Email</th>
                             <th scope="col">Telefon</th>
+                            <th scope="col">Acțiuni</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -74,6 +92,22 @@
                                 th:text="${customer.name}"></td>
                             <td th:text="${customer.email}"></td>
                             <td th:text="${customer.phone}"></td>
+                            <td>
+                                <div class="row-actions">
+                                    <a class="action-edit"
+                                    th:href="@{/customers/{id}/edit(id=${customer.id})}">
+                                        Editează
+                                    </a>
+
+                                    <form th:action="@{/customers/{id}/delete(id=${customer.id})}"
+                                        method="post"
+                                        onsubmit="return confirm('Sigur vrei să ștergi acest client?');">
+                                        <button class="action-delete" type="submit">
+                                            Șterge
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
                         </tr>
                         </tbody>
                     </table>

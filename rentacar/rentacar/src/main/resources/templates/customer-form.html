@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ro" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title th:text="${customerId != null
+        ? 'Editează clientul | RentFlow'
+        : 'Adaugă client | RentFlow'}">
+        Client | RentFlow
+    </title>
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="layout">
+    <aside class="sidebar">
+        <a class="brand" href="/">Rent<span>Flow</span></a>
+        <p class="sidebar-label">ADMINISTRARE</p>
+
+        <nav class="navigation" aria-label="Meniu principal">
+            <a class="nav-link" href="/">Acasă</a>
+            <a class="nav-link" href="/cars">Mașini</a>
+            <a class="nav-link active" href="/customers">Clienți</a>
+            <a class="nav-link" href="/rentals">Închirieri</a>
+        </nav>
+
+        <p class="sidebar-footer">
+            Mai multă ordine.<br>
+            Mai puține griji.
+        </p>
+    </aside>
+
+    <main class="main">
+        <div class="content">
+            <header class="topbar">
+                <a href="/customers">← Înapoi la clienți</a>
+                <span class="tag">RentFlow · Închirieri auto</span>
+            </header>
+
+            <div class="page-heading">
+                <p class="eyebrow">CLIENȚII TĂI</p>
+
+                <h1 th:text="${customerId != null
+                    ? 'Editează clientul'
+                    : 'Adaugă un client'}">
+                    Client
+                </h1>
+
+                <p class="subtitle"
+                   th:text="${customerId != null
+                       ? 'Actualizează numele și datele de contact.'
+                       : 'Completează numele și datele de contact.'}">
+                </p>
+            </div>
+
+            <form class="panel form-panel"
+                  th:action="${customerId != null}
+                      ? @{/customers/{id}/edit(id=${customerId})}
+                      : @{/customers}"
+                  th:object="${customer}"
+                  method="post">
+
+                <div class="alert alert-error"
+                     role="alert"
+                     th:if="${#fields.hasAnyErrors()}">
+                    <p>Verifică datele introduse.</p>
+                    <ul>
+                        <li th:each="error : ${#fields.allErrors()}"
+                            th:text="${error}">
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-field">
+                        <label for="name">Nume complet</label>
+                        <input id="name"
+                               type="text"
+                               th:field="*{name}"
+                               placeholder="Ex.: Andrei Popescu"
+                               maxlength="100"
+                               autocomplete="name"
+                               required>
+                    </div>
+
+                    <div class="form-field">
+                        <label for="email">Email</label>
+                        <input id="email"
+                               type="email"
+                               th:field="*{email}"
+                               placeholder="Ex.: andrei@example.com"
+                               maxlength="254"
+                               autocomplete="email"
+                               required>
+                    </div>
+
+                    <div class="form-field">
+                        <label for="phone">Telefon</label>
+                        <input id="phone"
+                               type="tel"
+                               th:field="*{phone}"
+                               placeholder="Ex.: 0712345678"
+                               maxlength="25"
+                               autocomplete="tel"
+                               required>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button class="button"
+                            type="submit"
+                            th:text="${customerId != null
+                                ? 'Salvează modificările'
+                                : 'Adaugă clientul'}">
+                        Salvează
+                    </button>
+
+                    <a class="button button-secondary" href="/customers">
+                        Anulează
+                    </a>
+                </div>
+            </form>
+        </div>
+    </main>
+</div>
+</body>
+</html>
