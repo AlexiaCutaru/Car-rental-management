@@ -139,12 +139,11 @@
                                         Editează
                                     </a>
 
-                                    <form th:action="@{/customers/{id}/delete(id=${customer.id})}"
-                                          method="post"
-                                          onsubmit="return confirm('Sigur vrei să ștergi acest client?');">
+                                    <form th:action="@{/customers/{id}/remove(id=${customer.id})}"
+                                        method="post"
+                                        onsubmit="return confirm('Ștergi acest client, contul lui și toate închirierile asociate? Acțiunea este definitivă.');">
 
-                                        <button class="action-delete"
-                                                type="submit">
+                                        <button class="action-delete" type="submit">
                                             Șterge
                                         </button>
                                     </form>
@@ -167,7 +166,9 @@
 
         <footer class="app-footer">
             <strong>RentFlow — fiecare drum, organizat.</strong>
-            <span>Clienții cu închirieri rămân în istoric</span>
+            <span>
+                Închirierile active și perioadele neîncheiate blochează ștergerea
+            </span>
         </footer>
 
     </div>

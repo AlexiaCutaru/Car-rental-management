@@ -27,6 +27,14 @@
                     <form th:if="${rental.status.name() == 'RESERVED'}" th:action="@{/rentals/{id}/status(id=${rental.id})}" method="post"><input type="hidden" name="action" value="start"><button class="action-edit" type="submit">Preluare ↗</button></form>
                     <form th:if="${rental.status.name() == 'RESERVED'}" th:action="@{/rentals/{id}/status(id=${rental.id})}" method="post" onsubmit="return confirm('Sigur vrei să anulezi această închiriere?');"><input type="hidden" name="action" value="cancel"><button class="action-delete" type="submit">Anulează</button></form>
                     <form th:if="${rental.status.name() == 'ACTIVE'}" th:action="@{/rentals/{id}/status(id=${rental.id})}" method="post" onsubmit="return confirm('Confirmi returnarea mașinii și finalizarea închirierii?');"><input type="hidden" name="action" value="complete"><button class="action-edit" type="submit">Finalizează ↗</button></form>
+                    <form th:action="@{/rentals/{id}/remove(id=${rental.id})}"
+                        method="post"
+                        onsubmit="return confirm('Ștergi definitiv această închiriere?');">
+
+                        <button class="action-delete" type="submit">
+                            Șterge
+                        </button>
+                    </form>
                     <span class="coming-soon" th:if="${rental.status.name() == 'COMPLETED' or rental.status.name() == 'CANCELLED'}">Închisă · păstrată în istoric</span>
                 </div>
             </article>
