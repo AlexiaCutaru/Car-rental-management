@@ -10,3 +10,121 @@
 @media(max-width:800px){.site-header{flex-wrap:wrap;padding:16px 20px;gap:14px;position:static}.primary-nav{order:3;width:100%;margin:0;justify-content:center;border-top:1px solid var(--border);padding-top:10px}.header-action{margin-left:auto}.app-container,.content{padding:0 20px}.hero-premium{grid-template-columns:1fr}.hero-art{height:230px}.hero-art img{object-fit:contain}.dashboard-grid{grid-template-columns:1fr}.stats-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.toolbar{align-items:stretch;flex-direction:column}.search-box{max-width:none}.filter-group{align-self:flex-start}.sidebar{flex-wrap:wrap;padding:20px}.navigation{width:100%;margin:0;justify-content:center}.page-title{align-items:flex-start}.page-title h1,.page-heading h1{font-size:32px}.page-title>.button{flex-shrink:0}.date-label{display:none}}
 @media(max-width:540px){.fleet-grid,.rental-grid,.cards,.form-grid{grid-template-columns:1fr}.app-main,.main{padding-top:25px}.hero-copy{padding:27px}.hero-copy h1{font-size:37px}.hero-art{height:210px}.stats-grid{gap:10px}.stat-card{padding:18px}.stat-card strong{font-size:28px}.page-title{flex-direction:column;gap:16px}.filter-chip{padding:8px 10px;font-size:11px}.filter-group{width:100%;justify-content:center;gap:2px}.app-footer{flex-direction:column;gap:5px}.form-panel{padding:24px}.topbar{flex-wrap:wrap}.navigation{gap:0}.nav-link{padding:9px 11px}.vehicle-art{height:210px}.primary-nav{gap:0}.primary-nav a{padding:9px 12px}.wordmark{font-size:20px}.logo-mark{width:28px;height:28px;font-size:17px}.header-action{font-size:11px;padding:10px 12px}.result-caption{margin-top:15px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+.vehicle-art img.vehicle-photo {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.vehicle-card:hover .vehicle-art img.vehicle-photo {
+    transform: none;
+}
+
+.photo-credits {
+    margin-top: 20px;
+    color: #777;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.photo-credits a {
+    color: inherit;
+    text-decoration: underline;
+}
+
+/* Formulare pentru conturile clienților */
+
+.panel.client-auth-panel {
+    width: 100%;
+    max-width: 760px;
+    margin: 24px auto;
+    padding: 36px;
+    background: #fff;
+    border-radius: 22px;
+    box-shadow: 0 12px 36px rgba(25, 27, 29, 0.06);
+}
+
+.panel.client-auth-panel.client-auth-login {
+    max-width: 480px;
+}
+
+.panel.client-auth-panel h1 {
+    margin-bottom: 12px;
+    font-size: clamp(26px, 3vw, 34px);
+    line-height: 1.15;
+    letter-spacing: -0.8px;
+}
+
+.panel.client-auth-panel .subtitle {
+    margin-bottom: 28px;
+    font-size: 14px;
+}
+
+.panel.client-auth-panel .form-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.client-auth-register .form-field:first-child {
+    grid-column: 1 / -1;
+}
+
+.panel.client-auth-panel .form-field {
+    gap: 8px;
+}
+
+.panel.client-auth-panel .form-field input {
+    min-height: 46px;
+    padding: 11px 14px;
+    font-size: 14px;
+    border-radius: 10px;
+}
+
+.panel.client-auth-panel .client-auth-fields {
+    display: grid;
+    gap: 20px;
+}
+
+.panel.client-auth-panel .form-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 26px;
+}
+
+.panel.client-auth-panel .form-actions .button {
+    min-height: 46px;
+}
+
+.client-auth-login .form-actions .button {
+    width: 100%;
+}
+
+.panel.client-auth-panel .client-auth-note {
+    margin: 24px 0 0;
+    text-align: center;
+    font-size: 13px;
+    color: var(--muted);
+}
+
+.panel.client-auth-panel .client-auth-note a {
+    color: #a4451d;
+    font-weight: 600;
+}
+
+@media (max-width: 600px) {
+    .panel.client-auth-panel {
+        margin: 12px auto;
+        padding: 24px;
+    }
+
+    .panel.client-auth-panel .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .panel.client-auth-panel .form-actions .button {
+        width: 100%;
+    }
+}

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ro" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Creează cont | RentFlow</title>
+<link rel="stylesheet"
+      href="/css/premium-final.css?v=20261012-auth">
+</head>
+<body>
+<header th:replace="~{fragments/premium :: navigation('customers')}"></header>
+
+<main class="app-main">
+    <div class="app-container">
+        <section class="panel client-auth-panel client-auth-register">
+            <p class="eyebrow">CONT CLIENT</p>
+            <h1>Creează-ți contul.</h1>
+            <p class="subtitle">
+                Completează datele tale și alege o parolă.
+            </p>
+
+            <form th:action="@{/client/register}"
+                  th:object="${customer}"
+                  method="post">
+
+                <div class="alert alert-error"
+                     role="alert"
+                     th:if="${#fields.hasAnyErrors()}">
+                    <p>Verifică datele introduse.</p>
+
+                    <ul>
+                        <li th:each="error : ${#fields.allErrors()}"
+                            th:text="${error}">
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-field">
+                        <label for="name">Nume complet</label>
+                        <input id="name"
+                               type="text"
+                               th:field="*{name}"
+                               maxlength="100"
+                               autocomplete="name"
+                               required>
+                    </div>
+
+                    <div class="form-field">
+                        <label for="email">Email</label>
+                        <input id="email"
+                               type="email"
+                               th:field="*{email}"
+                               maxlength="254"
+                               autocomplete="email"
+                               required>
+                    </div>
+
+                    <div class="form-field">
+                        <label for="phone">Telefon</label>
+                        <input id="phone"
+                               type="tel"
+                               th:field="*{phone}"
+                               maxlength="25"
+                               autocomplete="tel"
+                               required>
+                    </div>
+
+                    <div class="form-field">
+                        <label for="password">
+                            Parolă — minimum 8 caractere
+                        </label>
+                        <input id="password"
+                               name="password"
+                               type="password"
+                               minlength="8"
+                               maxlength="72"
+                               autocomplete="new-password"
+                               required>
+                    </div>
+
+                    <div class="form-field">
+                        <label for="confirmPassword">
+                            Confirmă parola
+                        </label>
+                        <input id="confirmPassword"
+                               name="confirmPassword"
+                               type="password"
+                               minlength="8"
+                               maxlength="72"
+                               autocomplete="new-password"
+                               required>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button class="button" type="submit">
+                        Creează contul
+                    </button>
+
+                    <a class="button button-secondary" href="/customers">
+                        Anulează
+                    </a>
+                </div>
+            </form>
+
+            <p class="client-auth-note">
+                Ai deja un cont?
+                <a href="/client/login">Autentifică-te</a>.
+            </p>
+        </section>
+    </div>
+</main>
+</body>
+</html>

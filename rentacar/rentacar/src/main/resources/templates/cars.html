@@ -14,8 +14,47 @@
         <div class="empty-state" th:if="${#lists.isEmpty(cars)}"><div class="empty-symbol" aria-hidden="true">↗</div><h2>Flota ta începe aici.</h2><p>Adaugă prima mașină și stabilește tariful zilnic.</p><a class="button" href="/cars/new">Adaugă o mașină</a></div>
         <div class="fleet-grid">
             <article class="vehicle-card" th:each="car : ${cars}" data-item th:attr="data-state=${car.inService ? 'service' : 'operational'},data-search-text=|${car.brand} ${car.model} ${car.licensePlate}|">
-                <div class="vehicle-art"><img src="/images/fleet-hero.svg" alt="" loading="lazy" width="880" height="520"><span class="badge" th:classappend="${car.inService ? 'badge-orange' : 'badge-green'}" th:text="${car.inService ? 'În service' : 'Operațională'}"></span><span class="art-caption">Ilustrație auto</span></div>
-                <div class="vehicle-info"><h2 th:text="|${car.brand} ${car.model}|"></h2><span class="plate" th:text="${car.licensePlate}"></span>
+                <div class="vehicle-art" th:switch="${car.licensePlate}">
+
+                    <img th:case="'TM20TSL'"
+                        class="vehicle-photo"
+                        src="/images/cars/tesla-model-3.jpg"
+                        alt="Tesla Model 3"
+                        loading="lazy"
+                        width="880"
+                        height="520">
+
+                    <img th:case="'B999TST'"
+                        class="vehicle-photo"
+                        src="/images/cars/volkswagen-golf-5.jpg"
+                        alt="Volkswagen Golf 5"
+                        loading="lazy"
+                        width="880"
+                        height="520">
+
+                    <img th:case="'AR34KJR'"
+                        class="vehicle-photo"
+                        src="/images/cars/renault-kadjar.jpg"
+                        alt="Renault Kadjar"
+                        loading="lazy"
+                        width="880"
+                        height="520">
+
+                    <img th:case="*"
+                        src="/images/fleet-hero.svg"
+                        alt="Ilustrație auto"
+                        loading="lazy"
+                        width="880"
+                        height="520">
+
+                    <span class="badge"
+                        th:classappend="${car.inService
+                            ? 'badge-orange' : 'badge-green'}"
+                        th:text="${car.inService
+                            ? 'În service' : 'Operațională'}">
+                    </span>
+
+                </div>                <div class="vehicle-info"><h2 th:text="|${car.brand} ${car.model}|"></h2><span class="plate" th:text="${car.licensePlate}"></span>
                     <div class="vehicle-meta"><div><small>An fabricație</small><div th:text="${car.manufactureYear}"></div></div><div class="vehicle-price"><span th:text="${car.pricePerDay}"></span> <small>RON / zi</small></div></div>
                     <div class="row-actions"><a class="action-edit" th:href="@{/cars/{id}/edit(id=${car.id})}">Editează</a><form th:action="@{/cars/{id}/delete(id=${car.id})}" method="post" onsubmit="return confirm('Sigur vrei să ștergi această mașină?');"><button class="action-delete" type="submit">Șterge</button></form></div>
                 </div>
@@ -23,5 +62,21 @@
         </div>
         <div class="empty-state" data-no-results hidden><h2>Nicio mașină găsită.</h2><p>Încearcă alt text sau schimbă filtrul de stare tehnică.</p></div>
     </section>
+    <p class="photo-credits">
+        Fotografii:
+        <a href="https://commons.wikimedia.org/wiki/File:2019_Tesla_Model_3_Performance_AWD_Front.jpg">
+            Tesla — Vauxford, ajustare Smnt
+        </a>,
+        <a href="https://commons.wikimedia.org/wiki/File:2017_Renault_Kadjar_Signature_DCi_1.6_Front.jpg">
+            Kadjar — Vauxford
+        </a>
+        (<a href="https://creativecommons.org/licenses/by-sa/4.0/">
+            CC BY-SA 4.0
+        </a>);
+        <a href="https://commons.wikimedia.org/wiki/File:VW_Golf_V_20090224_front.jpg">
+            Golf — M 93, domeniu public
+        </a>.
+        Imaginile sunt afișate decupat în carduri.
+    </p>
     <footer class="app-footer"><strong>RentFlow — fiecare drum, organizat.</strong><span>Flota ta, într-o singură privire</span></footer>
 </div></main></body></html>
